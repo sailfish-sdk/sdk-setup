@@ -1,0 +1,10 @@
+[Unit]
+Description=Update df.cache at shutdown
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStop=/usr/bin/sdk-freespace
+
+[Install]
+WantedBy=multi-user.target
