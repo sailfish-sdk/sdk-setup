@@ -154,6 +154,7 @@ mkdir -p %{buildroot}/%{_sysconfdir}/udev/rules.d
 ln -s /dev/null %{buildroot}/%{_sysconfdir}/udev/rules.d/80-net-setup-link.rules
 cp src/sdk-shutdown %{buildroot}%{_bindir}/
 cp src/dynexecfs %{buildroot}%{_bindir}/
+cp src/sdk-freespace %{buildroot}%{_bindir}/
 mkdir -p %{buildroot}%{_libexecdir}/%{name}
 cp src/workspace-autodetect %{buildroot}%{_libexecdir}/%{name}/
 cp src/sdk-setup-env %{buildroot}%{_libexecdir}/%{name}/
@@ -256,6 +257,7 @@ rm -Rf /home/.zypp-cache
 %systemd_preun information.service
 %systemd_preun sdk-enginelan.service
 %systemd_preun oneshot-root-late-sdk.service
+%systemd_preun sdk-freespace.service
 
 %post -n sdk-vm
 %systemd_post workspace.service
@@ -272,6 +274,7 @@ rm -Rf /home/.zypp-cache
 %systemd_post sdk-setup-swap.service
 %systemd_post sshd.socket
 %systemd_post oneshot-root-late-sdk.service
+%systemd_post sdk-freespace.service
 # this could be mounted read-only so to avoid a
 # cpio: chmod failed - Read-only file system
 if [ $1 -eq 1 ] ; then
@@ -302,6 +305,7 @@ fi
 %{_bindir}/sdk-setup-enginelan
 %{_bindir}/sdk-shutdown
 %{_bindir}/dynexecfs
+%{_bindir}/sdk-freespace
 %{_libexecdir}/%{name}/workspace-autodetect
 %{_libexecdir}/%{name}/sdk-setup-env
 /home/.zypp-cache
@@ -322,6 +326,7 @@ fi
 %{_unitdir}/sdk-setup-swap.service
 %{_unitdir}/dbus.socket.d/sdk.conf
 %{_unitdir}/oneshot-root-late-sdk.service
+%{_unitdir}/sdk-freespace.service
 %config %{_sysconfdir}/systemd/system/default.target
 %config %{_sysconfdir}/udev/rules.d/80-net-setup-link.rules
 %config %{_sysconfdir}/ssh/ssh-env.conf
